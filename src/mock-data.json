@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "title": "ACADEMY DINOSAUR",
+    "year": 2006,
+    "description": "A Epic Drama of a Feminist And a Mad Scientist who must Battle a Teacher in The Canadian Rockies",
+    "length": 86,
+    "rating": "PG"
+  },
+  {
+    "id": 2,
+    "title": "ACE GOLDFINGER",
+    "year": 2006,
+    "description": "A Astounding Epistle of a Database Administrator And a Explorer who must Find a Car in Ancient China",
+    "length": 48,
+    "rating": "G"
+  },
+  {
+    "id": 3,
+    "title": "ADAPTATION HOLES",
+    "year": 2006,
+    "description": "A Astounding Reflection of a Lumberjack And a Car who must Sink a Lumberjack in A Baloon Factory",
+    "length": 50,
+    "rating": "NC-17"
+  },
+  {
+    "id": 4,
+    "title": "AFFAIR PREJUDICE",
+    "year": 2006,
+    "description": "A Fanciful Documentary of a Frisbee And a Lumberjack who must Chase a Monkey in A Shark Tank",
+    "length": 117,
+    "rating": "G"
+  },
+  {
+    "id": 5,
+    "title": "AFRICAN EGG",
+    "year": 2006,
+    "description": "A Fast-Paced Documentary of a Pastry Chef And a Dentist who must Pursue a Forensic Psychologist in The Gulf of Mexico",
+    "length": 130,
+    "rating": "G"
+  },
+  {
+    "id": 6,
+    "title": "AGENT TRUMAN",
+    "year": 2006,
+    "description": "A Intrepid Panorama of a Robot And a Boy who must Escape a Sumo Wrestler in Ancient China",
+    "length": 169,
+    "rating": "PG"
+  },
+  {
+    "id": 7,
+    "title": "AIRPLANE SIERRA",
+    "year": 2006,
+    "description": "A Touching Saga of a Hunter And a Butler who must Discover a Butler in A Jet Boat",
+    "length": 62,
+    "rating": "PG-13"
+  },
+  {
+    "id": 8,
+    "title": "AIRPORT POLLOCK",
+    "year": 2006,
+    "description": "A Epic Tale of a Moose And a Girl who must Confront a Monkey in Ancient India",
+    "length": 54,
+    "rating": "R"
+  },
+  {
+    "id": 9,
+    "title": "ALABAMA DEVIL",
+    "year": 2006,
+    "description": "A Thoughtful Panorama of a Database Administrator And a Mad Scientist who must Outgun a Mad Scientist in A Jet Boat",
+    "length": 114,
+    "rating": "PG-13"
+  },
+  {
+    "id": 10,
+    "title": "ALADDIN CALENDAR",
+    "year": 2006,
+    "description": "A Action-Packed Tale of a Man And a Lumberjack who must Reach a Feminist in Ancient China",
+    "length": 63,
+    "rating": "NC-17"
+  },
+  {
+    "id": 11,
+    "title": "ALAMO VIDEOTAPE",
+    "year": 2006,
+    "description": "A Boring Epistle of a Butler And a Cat who must Fight a Pastry Chef in A MySQL Convention",
+    "length": 126,
+    "rating": "G"
+  },
+  {
+    "id": 12,
+    "title": "ALASKA PHANTOM",
+    "year": 2006,
+    "description": "A Fanciful Saga of a Hunter And a Pastry Chef who must Vanquish a Boy in Australia",
+    "length": 136,
+    "rating": "PG"
+  },
+  {
+    "id": 13,
+    "title": "ALI FOREVER",
+    "year": 2006,
+    "description": "A Action-Packed Drama of a Dentist And a Crocodile who must Battle a Feminist in The Canadian Rockies",
+    "length": 150,
+    "rating": "PG"
+  },
+  {
+    "id": 14,
+    "title": "ALICE FANTASIA",
+    "year": 2006,
+    "description": "A Emotional Drama of a A Shark And a Database Administrator who must Vanquish a Pioneer in Soviet Georgia",
+    "length": 94,
+    "rating": "NC-17"
+  },
+  {
+    "id": 15,
+    "title": "ALIEN CENTER",
+    "year": 2006,
+    "description": "A Brilliant Drama of a Cat And a Mad Scientist who must Battle a Feminist in A MySQL Convention",
+    "length": 46,
+    "rating": "NC-17"
+  }
+]
