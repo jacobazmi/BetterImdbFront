@@ -27,6 +27,27 @@ td {
   background-color: rgb(201, 193, 243);
 }
 
+td button {
+  width: 60px;
+  height: 30px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  /* padding: 10px; */
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 5px;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(101, 40, 214);
+  color: rgb(101, 40, 214);
+  cursor: pointer;
+}
+
+.delBttn button:hover {
+  color: white;
+  background-color: rgb(190, 74, 59);
+}
+
 form {
   display: flex;
   gap: 5px;
@@ -39,4 +60,31 @@ form td:last-child {
 
 form * {
   font-size: 18px;
+}
+
+.paginationBttns {
+  width: 80%;
+  height: 40px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+.paginationBttns a {
+  padding: 10px;
+  margin: 8px;
+  border-radius: 5px;
+  border: 1px solid rgb(101, 40, 214);
+  color: rgb(101, 40, 214);
+  cursor: pointer;
+}
+
+.paginationBttns a:hover {
+  color: white;
+  background-color: rgb(101, 40, 214);
+}
+
+.paginationActive a {
+  color: white;
+  background-color: rgb(101, 40, 214);
 }

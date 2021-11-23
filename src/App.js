@@ -3,23 +3,28 @@ import { nanoid } from "nanoid";
 import "./App.css";
 import ReadOnlyRow from "./components/ReadOnlyRow";
 import EditableRow from "./components/EditableRow";
+import ReactPaginate from "react-paginate";
 
 const App = () => {
   const [films, setFilms] = useState(null);
+  const [apiUrl, setApiUrl] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [order, setOrder] = useState("ASC");
+  const [pageNumber, setPageNumber] = useState(0);
   const [addFormData, setAddFormData] = useState({
     title: "",
-    year: "",
+    year: 0,
     description: "",
-    length: "",
+    length: 0,
+    rating: "",
   });
 
   const [editFormData, setEditFormData] = useState({
     title: "",
-    year: "",
+    year: 0,
     description: "",
-    length: "",
+    length: 0,
+    rating: "",
   });
 
   const [editFilmId, setEditFilmId] = useState(null);
@@ -57,10 +62,33 @@ const App = () => {
       year: addFormData.year,
       description: addFormData.description,
       length: addFormData.length,
+      rating: addFormData.rating,
     };
 
     const newFilms = [...films, newFilm];
     setFilms(newFilms);
+  };
+
+  const handleAddFormSubmitApi = (event) => {
+    alert("New Film Added");
+    event.preventDefault();
+
+    const newFilm = {
+      title: addFormData.title,
+      year: addFormData.year,
+      description: addFormData.description,
+      length: addFormData.length,
+      rating: addFormData.rating,
+    };
+
+    fetch("http://localhost:8080/betterimdb/films/addfilmbody", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newFilm),
+    }).then(() => {
+      console.log("new film added");
+      getFilms();
+    });
   };
 
   const handleEditFormSubmit = (event) => {
@@ -72,6 +100,7 @@ const App = () => {
       year: editFormData.year,
       description: editFormData.description,
       length: editFormData.length,
+      rating: editFormData.rating,
     };
 
     const newFilms = [...films];
@@ -93,6 +122,7 @@ const App = () => {
       year: film.year,
       description: film.description,
       length: film.length,
+      rating: film.rating,
     };
 
     setEditFormData(formValues);
@@ -100,16 +130,6 @@ const App = () => {
 
   const handleCancelClick = () => {
     setEditFilmId(null);
-  };
-
-  const handleDeleteClick = (filmId) => {
-    const newFilms = [...films];
-
-    const index = films.findIndex((film) => film.id === filmId);
-
-    newFilms.splice(index, 1);
-
-    setFilms(newFilms);
   };
 
   const sorting = (col) => {
@@ -191,10 +211,18 @@ const App = () => {
   if (loading) return "Loading...";
   if (error) return "Error!";
 
-  const searchFilms = () => {
-    fetch(
-      "http://localhost:8080/betterimdb/films" + "/search?title=" + "aladdin"
-    )
+  const handleSearch = (e) => {
+    let newApiUrl = { ...apiUrl };
+    setSearchTerm(e.target.value);
+    newApiUrl =
+      "http://localhost:8080/betterimdb/films" + "/search?title=" + searchTerm;
+    setApiUrl(newApiUrl);
+    console.log(newApiUrl);
+  };
+
+  const searchFilms = (e) => {
+    e.preventDefault();
+    fetch(apiUrl)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -206,20 +234,101 @@ const App = () => {
       });
   };
 
+  const deleteFilm = (id) => {
+    if (window.confirm("Are you sure?")) {
+      fetch("http://localhost:8080/betterimdb/films/deletefilm/" + id, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }).then((result) => {
+        result.json().then((resp) => {
+          console.warn("Film " + resp.id + " deleted.", resp);
+          getFilms();
+        });
+      });
+    }
+  };
+
+  const updateFilm = (event) => {
+    event.preventDefault();
+
+    const editedFilm = {
+      id: editFilmId,
+      title: editFormData.title,
+      year: editFormData.year,
+      description: editFormData.description,
+      length: editFormData.length,
+      rating: editFormData.rating,
+    };
+
+    const index = editFilmId;
+
+    fetch("http://localhost:8080/betterimdb/films/updatefilmbody/" + index, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(editedFilm),
+    }).then((result) => {
+      result.json().then((resp) => {
+        console.warn("Film " + resp.id + " updated.", resp);
+      });
+    });
+    alert("Film updated: ID " + index);
+    setEditFilmId(null);
+    getFilms();
+  };
+
+  const filmsPerPage = 10;
+  const pagesVisited = pageNumber * filmsPerPage;
+
+  const displayUsers = films
+    .slice(pagesVisited, pagesVisited + filmsPerPage)
+    .map((film) => {
+      return (
+        <Fragment>
+          {editFilmId === film.id ? (
+            <EditableRow
+              editFormData={editFormData}
+              handleEditFormChange={handleEditFormChange}
+              handleCancelClick={handleCancelClick}
+            />
+          ) : (
+            <ReadOnlyRow
+              film={film}
+              handleEditClick={handleEditClick}
+              deleteFilm={deleteFilm}
+            />
+          )}
+        </Fragment>
+      );
+    });
+
+  const pageCount = Math.ceil(films.length / filmsPerPage);
+
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
+  };
+
   return (
     <div className="app-container">
       <div className="search-container">
-        <input
-          type="text"
-          placeholder="Search..."
-          // onChange={(event) => {
-          //   setSearchTerm(event.target.value);
-          // }}
-        ></input>
-        <button onClick={searchFilms}>Search</button>
+        <form onSubmit={(e) => searchFilms(e)}>
+          <input
+            type="text"
+            placeholder="Search..."
+            onChange={(e) => {
+              handleSearch(e);
+            }}
+          ></input>
+          <button>Search</button>
+        </form>
       </div>
       <button onClick={getFilms}>Refresh Films</button>
-      <form onSubmit={handleEditFormSubmit}>
+      <form onSubmit={updateFilm}>
         <table className="table table-bordered">
           <thead>
             <tr>
@@ -227,43 +336,28 @@ const App = () => {
               <th onClick={() => sortingNumber("year")}>Year</th>
               <th onClick={() => sorting("description")}>Description</th>
               <th onClick={() => sortingNumber("length")}>Length</th>
+              <th onClick={() => sorting("rating")}>Rating</th>
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody>
-            {films
-              .filter((film) => {
-                if (searchTerm == "") {
-                  return film;
-                } else if (
-                  film.title.toLowerCase().includes(searchTerm.toLowerCase())
-                ) {
-                  return film;
-                }
-              })
-              .map((film) => (
-                <Fragment>
-                  {editFilmId === film.id ? (
-                    <EditableRow
-                      editFormData={editFormData}
-                      handleEditFormChange={handleEditFormChange}
-                      handleCancelClick={handleCancelClick}
-                    />
-                  ) : (
-                    <ReadOnlyRow
-                      film={film}
-                      handleEditClick={handleEditClick}
-                      handleDeleteClick={handleDeleteClick}
-                    />
-                  )}
-                </Fragment>
-              ))}
-          </tbody>
+          <tbody>{displayUsers}</tbody>
         </table>
       </form>
 
+      <ReactPaginate
+        previousLabel={"Previous"}
+        nextLabel={"Next"}
+        pageCount={pageCount}
+        onPageChange={changePage}
+        containerClassName={"paginationBttns"}
+        previousLinkClassName={"previousBttn"}
+        nextLinkClassName={"nextBttn"}
+        disabledClassName={"paginationDisabled"}
+        activeClassName={"paginationActive"}
+      />
+
       <h2>Add a Film</h2>
-      <form onSubmit={handleAddFormSubmit}>
+      <form onSubmit={handleAddFormSubmitApi}>
         <input
           type="text"
           name="title"
@@ -290,6 +384,13 @@ const App = () => {
           name="length"
           required="required"
           placeholder="Enter a length..."
+          onChange={handleAddFormChange}
+        />
+        <input
+          type="text"
+          name="rating"
+          required="required"
+          placeholder="Enter a rating..."
           onChange={handleAddFormChange}
         />
         <button type="submit">Add</button>
