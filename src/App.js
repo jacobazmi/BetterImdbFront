@@ -1,5 +1,4 @@
-import React, { useState, Fragment, useEffect, useSortBy } from "react";
-import { nanoid } from "nanoid";
+import React, { useState, Fragment, useEffect } from "react";
 import "./App.css";
 import ReadOnlyRow from "./components/ReadOnlyRow";
 import EditableRow from "./components/EditableRow";
@@ -53,22 +52,6 @@ const App = () => {
     setEditFormData(newFormData);
   };
 
-  const handleAddFormSubmit = (event) => {
-    event.preventDefault();
-
-    const newFilm = {
-      id: nanoid(),
-      title: addFormData.title,
-      year: addFormData.year,
-      description: addFormData.description,
-      length: addFormData.length,
-      rating: addFormData.rating,
-    };
-
-    const newFilms = [...films, newFilm];
-    setFilms(newFilms);
-  };
-
   const handleAddFormSubmitApi = (event) => {
     alert("New Film Added");
     event.preventDefault();
@@ -89,28 +72,6 @@ const App = () => {
       console.log("new film added");
       getFilms();
     });
-  };
-
-  const handleEditFormSubmit = (event) => {
-    event.preventDefault();
-
-    const editedFilm = {
-      id: editFilmId,
-      title: editFormData.title,
-      year: editFormData.year,
-      description: editFormData.description,
-      length: editFormData.length,
-      rating: editFormData.rating,
-    };
-
-    const newFilms = [...films];
-
-    const index = films.findIndex((film) => film.id === editFilmId);
-
-    newFilms[index] = editedFilm;
-
-    setFilms(newFilms);
-    setEditFilmId(null);
   };
 
   const handleEditClick = (event, film) => {

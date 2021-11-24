@@ -29,7 +29,7 @@ td {
 
 td button {
   width: 60px;
-  height: 30px;
+  /* height: 8; */
   list-style: none;
   display: flex;
   justify-content: center;
