@@ -5,6 +5,7 @@ import EditableRow from "./components/EditableRow";
 import ReactPaginate from "react-paginate";
 
 const App = () => {
+  const appIp = "54.234.48.200";
   const [films, setFilms] = useState(null);
   const [apiUrl, setApiUrl] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -64,7 +65,7 @@ const App = () => {
       rating: addFormData.rating,
     };
 
-    fetch("http://54.234.48.200:8080/betterimdb/films/addfilmbody", {
+    fetch("http://" + appIp + ":8080/betterimdb/films/addfilmbody", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newFilm),
@@ -127,7 +128,7 @@ const App = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://54.234.48.200:8080/betterimdb/films")
+    fetch("http://" + appIp + ":8080/betterimdb/films")
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -150,7 +151,7 @@ const App = () => {
   if (error) return "Error!";
 
   const getFilms = () => {
-    fetch("http://54.234.48.200:8080/betterimdb/films")
+    fetch("http://" + appIp + ":8080/betterimdb/films")
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -173,27 +174,21 @@ const App = () => {
   if (error) return "Error!";
 
   const handleSearch = (e) => {
-    let newApiUrl = { ...apiUrl };
     setSearchTerm(e.target.value);
-    newApiUrl =
-      "http://54.234.48.200:8080/betterimdb/films" +
-      "/search?title=" +
-      searchTerm;
-    setApiUrl(newApiUrl);
-    console.log(newApiUrl);
   };
 
   const searchFilms = (e) => {
     e.preventDefault();
     let newApiUrl = { ...apiUrl };
-    setSearchTerm(e.target.value);
     newApiUrl =
-      "http://54.234.48.200:8080/betterimdb/films" +
+      "http://" +
+      appIp +
+      ":8080/betterimdb/films" +
       "/search?title=" +
       searchTerm;
     setApiUrl(newApiUrl);
     console.log(newApiUrl);
-    fetch(apiUrl)
+    fetch(newApiUrl)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -207,7 +202,7 @@ const App = () => {
 
   const deleteFilm = (id) => {
     if (window.confirm("Are you sure?")) {
-      fetch("http://54.234.48.200:8080/betterimdb/films/deletefilm/" + id, {
+      fetch("http://" + appIp + ":8080/betterimdb/films/deletefilm/" + id, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -237,7 +232,7 @@ const App = () => {
     const index = editFilmId;
 
     fetch(
-      "http://54.234.48.200:8080/betterimdb/films/updatefilmbody/" + index,
+      "http://" + appIp + ":8080/betterimdb/films/updatefilmbody/" + index,
       {
         method: "PUT",
         headers: {
@@ -294,10 +289,9 @@ const App = () => {
           <input
             type="text"
             placeholder="Search..."
-            // onChange={(e) => {
-            //   handleSearch(e);
-            // }
-            // }
+            onChange={(e) => {
+              handleSearch(e);
+            }}
           ></input>
           <button>Search</button>
         </form>
