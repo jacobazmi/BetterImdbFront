@@ -185,6 +185,14 @@ const App = () => {
 
   const searchFilms = (e) => {
     e.preventDefault();
+    let newApiUrl = { ...apiUrl };
+    setSearchTerm(e.target.value);
+    newApiUrl =
+      "http://54.234.48.200:8080/betterimdb/films" +
+      "/search?title=" +
+      searchTerm;
+    setApiUrl(newApiUrl);
+    console.log(newApiUrl);
     fetch(apiUrl)
       .then((response) => {
         if (response.ok) {
@@ -286,9 +294,10 @@ const App = () => {
           <input
             type="text"
             placeholder="Search..."
-            onChange={(e) => {
-              handleSearch(e);
-            }}
+            // onChange={(e) => {
+            //   handleSearch(e);
+            // }
+            // }
           ></input>
           <button>Search</button>
         </form>
