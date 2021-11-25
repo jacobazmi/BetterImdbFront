@@ -64,7 +64,7 @@ const App = () => {
       rating: addFormData.rating,
     };
 
-    fetch("http://localhost:8080/betterimdb/films/addfilmbody", {
+    fetch("http://54.234.48.200:8080/betterimdb/films/addfilmbody", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newFilm),
@@ -127,7 +127,7 @@ const App = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8080/betterimdb/films")
+    fetch("http://54.234.48.200:8080/betterimdb/films")
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -150,7 +150,7 @@ const App = () => {
   if (error) return "Error!";
 
   const getFilms = () => {
-    fetch("http://localhost:8080/betterimdb/films")
+    fetch("http://54.234.48.200:8080/betterimdb/films")
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -176,7 +176,9 @@ const App = () => {
     let newApiUrl = { ...apiUrl };
     setSearchTerm(e.target.value);
     newApiUrl =
-      "http://localhost:8080/betterimdb/films" + "/search?title=" + searchTerm;
+      "http://54.234.48.200:8080/betterimdb/films" +
+      "/search?title=" +
+      searchTerm;
     setApiUrl(newApiUrl);
     console.log(newApiUrl);
   };
@@ -197,7 +199,7 @@ const App = () => {
 
   const deleteFilm = (id) => {
     if (window.confirm("Are you sure?")) {
-      fetch("http://localhost:8080/betterimdb/films/deletefilm/" + id, {
+      fetch("http://54.234.48.200:8080/betterimdb/films/deletefilm/" + id, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -226,14 +228,17 @@ const App = () => {
 
     const index = editFilmId;
 
-    fetch("http://localhost:8080/betterimdb/films/updatefilmbody/" + index, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(editedFilm),
-    }).then((result) => {
+    fetch(
+      "http://54.234.48.200:8080/betterimdb/films/updatefilmbody/" + index,
+      {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(editedFilm),
+      }
+    ).then((result) => {
       result.json().then((resp) => {
         console.warn("Film " + resp.id + " updated.", resp);
       });
