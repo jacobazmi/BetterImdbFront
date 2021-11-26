@@ -5,7 +5,7 @@ import EditableRow from "./components/EditableRow";
 import ReactPaginate from "react-paginate";
 
 const App = () => {
-  const appIp = "54.234.48.200";
+  const appIp = "54.175.235.177";
   const [films, setFilms] = useState(null);
   const [apiUrl, setApiUrl] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
